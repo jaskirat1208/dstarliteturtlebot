@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
+<<<<<<< HEAD
 project(dstarliteturtlebot)
+=======
+project(project)
+>>>>>>> 4ae941293b3552c0360181564f1f71f43c992362
 
 ## Compile as C++11, supported in ROS Kinetic and newer
  add_compile_options(-std=c++11)
