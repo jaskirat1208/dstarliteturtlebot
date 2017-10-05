@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <package>
-<<<<<<< HEAD
   <name>dstarliteturtlebot</name>
-=======
-  <name>project</name>
->>>>>>> 4ae941293b3552c0360181564f1f71f43c992362
   <version>0.0.0</version>
   <description>The project package</description>
 
@@ -13,6 +9,7 @@
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="jaskirat@todo.todo">jaskirat</maintainer>
 
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
 
   <!-- One license tag required, multiple allowed, one license per tag -->
   <!-- Commonly used license strings: -->

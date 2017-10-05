@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-<<<<<<< HEAD
 project(dstarliteturtlebot)
-=======
-project(project)
->>>>>>> 4ae941293b3552c0360181564f1f71f43c992362
 
 ## Compile as C++11, supported in ROS Kinetic and newer
  add_compile_options(-std=c++11)
@@ -140,13 +136,13 @@ include_directories(
 	 target_link_libraries(finder ${catkin_LIBRARIES})
 
 	 
-	add_executable(planner src/Dstar.h src/test.cpp src/Dstar.cpp)
+	add_executable(planner src/Dstar.h src/test.cpp src/Dstar.cpp src/variable.h)
 	target_link_libraries(planner ${catkin_LIBRARIES})
 	
-	add_executable(replanner src/Dstar.h src/replanner.cpp src/Dstar.cpp) 
+	add_executable(replanner src/Dstar.h src/replanner.cpp src/Dstar.cpp src/variable.h) 
 	target_link_libraries(replanner ${catkin_LIBRARIES})
 
-	add_executable(get_obstacle_position src/getObstaclePose.cpp) 
+	add_executable(get_obstacle_position src/getObstaclePose.cpp src/variable.h) 
 	target_link_libraries(get_obstacle_position ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix

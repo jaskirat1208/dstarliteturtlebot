@@ -16,6 +16,8 @@
 using namespace std;
 using namespace __gnu_cxx;
 
+
+
 class state {
  public:
   int x;
