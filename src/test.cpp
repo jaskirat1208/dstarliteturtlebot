@@ -39,35 +39,36 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	// cin>>start_x>>start_y;
 	// dstar->updateStart(start_x,start_y);
 	cin>>goal_x>>goal_y;
+	dstar->init(start_x,start_y,goal_x,goal_y);         // set start to (0,0) and goal to (10,5)
 	// dstar->updateGoal(goal_x,goal_y);
   	// list<state> mypath;
-	dstar->updateCell(3,4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,2,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(3,4,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(1,4,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(1,1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(1,2,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
 	// dstar->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
+	// // dstar->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
 	
-	dstar->updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
+	// // dstar->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
 	// dstar->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
-	dstar->updateCell(4,7,-1);     // set cell (3,4) to be non traversable
+	// dstar->updateCell(4,7,-1);     // set cell (3,4) to be non traversable
 
 
 	// dstar->updateCell(2,2,42.432); // set set (2,2) to have cost 42.432
@@ -86,7 +87,6 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	// dstar->updateGoal(0,4);        // move goal to (0,1)
 	dstar->updateCell(0,1,-1);	//(1,1 
 	dstar->updateCell(0,2,-1);	//(1,1 
-	dstar->init(start_x,start_y,goal_x,goal_y);         // set start to (0,0) and goal to (10,5)
 
 	dstar->replan();               // plan a path
 	mypath = dstar->getPath();     // retrieve path

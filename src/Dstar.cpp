@@ -22,32 +22,6 @@ Dstar::Dstar() {
 
   	maxSteps = 80000;  // node expansions before we give up
   	C1       = 1;      // cost of an unseen cell
-	// updateCell(1,4,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(1,1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
-	// updateCell(1,2,-1);     // set cell (3,4) to be non traversable
-	// updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
-	// updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
-	// updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
-	// updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
-	// updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
-	// updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
-	// // star->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
-	
-	// updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
-	// // star->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
-	// updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
-	// updateCell(4,7,-1);     // set cell (3,4) to be non traversable
 }
 
 /* float Dstar::keyHashCode(state u)
@@ -103,9 +77,10 @@ bool Dstar::occupied(state u) {
  */
 void Dstar::init(int sX, int sY, int gX, int gY) {
 
-  cellHash.clear();
-  path.clear();
-  openHash.clear();
+  	cellHash.clear();
+  	path.clear();
+  	openHash.clear();
+  	
   while(!openList.empty()) openList.pop();
   			//make the open list empty
   k_m = 0;
@@ -127,6 +102,32 @@ void Dstar::init(int sX, int sY, int gX, int gY) {
   s_start = calculateKey(s_start);
 
   s_last = s_start;
+  updateCell(1,4,-1);     // set cell (3,4) to be non traversable
+	updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,2,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
+	// star->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
+	
+	updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
+	updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
+	// star->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(4,7,-1);     // set cell (3,4) to be non traversable
 
 }
 /* void Dstar::makeNewCell(state u)
@@ -509,6 +510,32 @@ void Dstar::updateStart(int x, int y) {
  * likely no longer use.
  */
 void Dstar::updateGoal(int x, int y) {
+updateCell(1,4,-1);     // set cell (3,4) to be non traversable
+	updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,2,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
+	// star->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
+	updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
+	
+	updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
+	updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
+	updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
+	// star->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
+	updateCell(4,7,-1);     // set cell (3,4) to be non traversable
 
   list< pair<ipoint2, double> > toAdd;
   pair<ipoint2, double> tp;
@@ -567,7 +594,7 @@ void Dstar::updateGoal(int x, int y) {
  */
 bool Dstar::replan() {
 
-  path.clear();
+  // path.clear();
 
   int res = computeShortestPath();
   //printf("res: %d ols: %d ohs: %d tk: [%f %f] sk: [%f %f] sgr: (%f,%f)\n",res,openList.size(),openHash.size(),openList.top().k.first,openList.top().k.second, s_start.k.first, s_start.k.second,getRHS(s_start),getG(s_start));
