@@ -35,7 +35,6 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
     start_x=round(gms.response.pose.position.x);
     start_y=round(gms.response.pose.position.y);
 
-
 	// cin>>start_x>>start_y;
 	// dstar->updateStart(start_x,start_y);
 	cin>>goal_x>>goal_y;

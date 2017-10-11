@@ -35,7 +35,7 @@ ros::NodeHandle n){
         vel_msg.angular.y=0;
         vel_msg.angular.z=0;
         double threshold =0.01;
-        cout<<"FINAL: "<<atan2(delta_y,delta_x)<<endl<<"CURRENT: "<<theta;
+        // cout<<"FINAL: "<<atan2(delta_y,delta_x)<<endl<<"CURRENT: "<<theta;
         ros::Rate loop(10);
         while(abs(atan2(delta_y,delta_x)-theta)>threshold){
                 client.call(gms);
@@ -44,7 +44,7 @@ ros::NodeHandle n){
                 vel_pub.publish(vel_msg);
                 ros::spinOnce();
                 loop.sleep();
-                cout<<"FINAL: "<<atan2(delta_y,delta_x)<<endl<<"CURRENT: "<<theta;
+                // cout<<"FINAL: "<<atan2(delta_y,delta_x)<<endl<<"CURRENT: "<<theta;
         
         }
         vel_msg.angular.z=0;
@@ -91,7 +91,7 @@ ros::NodeHandle n){
                 distance=sqrt(delta_y*delta_y+delta_x*delta_x);
                 vel_msg.linear.x=0.5*distance;
                 vel_msg.angular.z=4*(atan2(delta_y,delta_x)-(getangle(gms.response.pose.orientation.z,gms.response.pose.orientation.w)));
-                cout<<"Currently at ("<<x_curr<<","<<y_curr<<")"<<endl;
+                // cout<<"Currently at ("<<x_curr<<","<<y_curr<<")"<<endl;
                 vel_pub.publish(vel_msg);
                 ros::spinOnce();
                 loop.sleep();        
@@ -113,7 +113,7 @@ ros::NodeHandle n){
         
         rotate(x,y,x_in,y_in,theta,n);                                                                        //rotates along the desired orientation
         translate(x,y,x_in,y_in,theta,n);                                                                        //move it in the required direction
-        cout<<"DESTINATION REACHED";
+        cout<<"DESTINATION REACHED"<< x <<" " <<y;
 }
 int main(int argc, char **argv)
 {

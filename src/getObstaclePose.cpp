@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <cmath>
+
 #include <string>
 #include <ctime>
 #include <iostream>
@@ -26,8 +27,8 @@ int main(int argc, char **argv)
 	gms.request.relative_entity_name="";
 	client.call(gms);
 	int curr_x,curr_y;
-	curr_x=(int)(gms.response.pose.position.x+0.5);
-	curr_y= (int)(gms.response.pose.position.y+0.5);
-	cout<<curr_x<<" "<<curr_y;
+	curr_x=round(gms.response.pose.position.x);
+	curr_y= round(gms.response.pose.position.y);
+	cout<<curr_x<<" "<<curr_y<<endl;
 	return 0;
 }
