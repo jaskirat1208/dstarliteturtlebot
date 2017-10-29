@@ -19,7 +19,29 @@ using namespace std;
  */
 
 Dstar::Dstar() {
-
+  updateCell(0,2,-1);     // set cell (3,4) to be non traversable
+  updateCell(0,1,-1);     // set cell (3,4) to be non traversable
+  updateCell(1,4,-1);     // set cell (3,4) to be non traversable
+  updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
+  updateCell(1,1,-1);     // set cell (3,4) to be non traversable
+  updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
+  updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
+  updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
+  updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
+  updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
+  updateCell(2,-4,-1);     // set cell (3,4) to be non traversable
+  updateCell(0,-3,-1);     // set cell (3,4) to be non traversable
+  updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
+  updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
+  updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
+  updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
+  updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
+  updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
+  updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
+  updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
+  updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
+  updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
+  updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
   	maxSteps = 80000;  // node expansions before we give up
   	C1       = 1;      // cost of an unseen cell
 }
@@ -102,11 +124,12 @@ void Dstar::init(int sX, int sY, int gX, int gY) {
   s_start = calculateKey(s_start);
 
   s_last = s_start;
+  updateCell(0,2,-1);     // set cell (3,4) to be non traversable
+  updateCell(0,1,-1);     // set cell (3,4) to be non traversable
   updateCell(1,4,-1);     // set cell (3,4) to be non traversable
 	updateCell(-1,1,-1);     // set cell (3,4) to be non traversable
 	updateCell(1,1,-1);     // set cell (3,4) to be non traversable
 	updateCell(-1,2,-1);     // set cell (3,4) to be non traversable
-	updateCell(1,2,-1);     // set cell (3,4) to be non traversable
 	updateCell(1,-1,-1);     // set cell (3,4) to be non traversable
 	updateCell(2,-1,-1);     // set cell (3,4) to be non traversable
 	updateCell(0,-4,-1);     // set cell (3,4) to be non traversable
@@ -116,18 +139,14 @@ void Dstar::init(int sX, int sY, int gX, int gY) {
 	updateCell(1,-3,-1);     // set cell (3,4) to be non traversable
 	updateCell(2,-3,-1);     // set cell (3,4) to be non traversable
 	updateCell(-2,-4,-1);     // set cell (3,4) to be non traversable
-	// star->updateCell(1,-4,-1);     // set cell (3,4) to be non traversable
 	updateCell(-2,-3,-1);     // set cell (3,4) to be non traversable
 	updateCell(-2,-2,-1);     // set cell (3,4) to be non traversable
-	
 	updateCell(-3,-2,-1);     // set cell (3,4) to be non traversable
 	updateCell(-3,-1,-1);     // set cell (3,4) to be non traversable
 	updateCell(-4,-1,-1);     // set cell (3,4) to be non traversable
 	updateCell(-4,0,-1);     // set cell (3,4) to be non traversable
-	// star->updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
 	updateCell(-5,0,-1);     // set cell (3,4) to be non traversable
 	updateCell(-6,0,-1);     // set cell (3,4) to be non traversable
-	updateCell(4,7,-1);     // set cell (3,4) to be non traversable
 
 }
 /* void Dstar::makeNewCell(state u)

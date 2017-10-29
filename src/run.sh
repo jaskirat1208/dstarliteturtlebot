@@ -13,7 +13,7 @@ do
     # echo "$next_x $next_y" >> temporary.txt
     tail -n +2 temp_file.txt > headerless.txt
     cat headerless.txt>temp_file.txt 
-    echo "turtlebot" >robot_model.txt
+    echo "jassi_da_model" >robot_model.txt
     rosrun dstarliteturtlebot get_obstacle_position<robot_model.txt > obstacle_pose.txt
     echo "GOING TO $keys $values and then to $next_x $next_y"
     echo "$keys"

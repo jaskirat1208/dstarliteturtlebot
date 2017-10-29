@@ -10,11 +10,12 @@
 #include <ctime>
 #include "variable.h"
 // #include <iostream>
-extern list<state> mypath;
+// extern list<state> mypath;
+extern Dstar *dstar;
 using namespace std;
 int main(int argc, char **argv)
 {
-	Dstar *dstar = new Dstar();
+	// Dstar *dstar = new Dstar();
 	int start_x,start_y,goal_x,goal_y;
 
 
@@ -90,7 +91,7 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	dstar->replan();               // plan a path
 	mypath = dstar->getPath();     // retrieve path
 	// cout<<mypath.size()<<endl;
-	for(iter2=mypath.begin(); iter2 != mypath.end(); iter2++) {
+	for(iter2=++mypath.begin(); iter2 != mypath.end(); iter2++) {
 		//glVertex3f(iter2->x, iter2->y, 0.3);
 		cout<<iter2->x<<"="<<iter2->y<<endl;
 		// cout<<"Path comprises of ("<<iter2->x<<","<<iter2->y<<")"<<endl;

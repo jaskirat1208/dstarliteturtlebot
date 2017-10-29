@@ -8,11 +8,13 @@
 #include <fstream>
 #include <cmath>
 #include <ctime>
+#include "variable.h"
 // #include <iostream>
 using namespace std;
+extern Dstar *dstar;
 int main(int argc, char **argv)
 {
-	Dstar *dstar = new Dstar();
+	// Dstar *dstar = new Dstar();
 	int start_x,start_y;
 
 
@@ -23,7 +25,7 @@ int main(int argc, char **argv)
     /*************************************************************************************/
     ros::NodeHandle n;
     ros::ServiceClient
-client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
+	client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
     gazebo_msgs::GetModelState gms;
     gms.request.model_name="mobile_base";
     gms.request.relative_entity_name="";
@@ -40,7 +42,7 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	list<state>::iterator iter2;
 	dstar->replan();               // plan a path
 	mypath = dstar->getPath();     // retrieve path
-	for(iter2=mypath.begin(); iter2 != mypath.end(); iter2++) {
+	for(iter2=++mypath.begin(); iter2 != mypath.end(); iter2++) {
 		cout<<iter2->x<<"="<<iter2->y<<endl;
 		
 	}

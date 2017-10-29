@@ -134,8 +134,12 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 	 add_executable(finder src/finder.cpp )
 	 target_link_libraries(finder ${catkin_LIBRARIES})
+	 add_executable(obstacle_traj src/obstacle_traj.cpp )
+	 target_link_libraries(obstacle_traj ${catkin_LIBRARIES})
 
-	 
+	add_executable(main src/main.cpp )
+	 target_link_libraries(main ${catkin_LIBRARIES})
+
 	add_executable(planner src/Dstar.h src/test.cpp src/Dstar.cpp src/variable.h)
 	target_link_libraries(planner ${catkin_LIBRARIES})
 	
