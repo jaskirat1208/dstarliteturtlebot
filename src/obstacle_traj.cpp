@@ -11,7 +11,7 @@
 using namespace std;
 ros::Publisher vel_pub;
 gazebo_msgs::GetModelState gms;
-gazebo_msgs::SetmodelState sms;
+// gazebo_msgs::SetmodelState sms;
 
 double getangle(double z,double w){
         double halfangle=atan2(z,w);
@@ -46,15 +46,15 @@ ros::NodeHandle n){
                 theta=getangle(gms.response.pose.orientation.z,gms.response.pose.orientation.w);
                 vel_msg.twist.angular.z=atan2(delta_y,delta_x)-theta;
                 vel_msg.pose = gms.response.pose;
-                client.call(sms);
-                // vel_pub.publish(vel_msg);
-                // ros::spinOnce();
-                // loop.sleep();
+                // client.call(sms);
+                vel_pub.publish(vel_msg);
+                ros::spinOnce();
+                loop.sleep();
                 cout<<"FINAL: "<<atan2(delta_y,delta_x)<<endl<<"CURRENT: "<<theta;
         
         }
         vel_msg.twist.angular.z=0;
-        client.call(sms);
+        // client.call(sms);
         // vel_pub.publish(vel_msg);
         cout<<"END OF ROTATION"<<endl;
 }
@@ -71,7 +71,7 @@ ros::NodeHandle n){
         cout<<"TRANSLATION: "<<endl;
         gazebo_msgs::ModelState vel_msg;                              //to be published 
 
-        vel_msg.twist.linear.x=0;
+        vel_msg.twist.linear.x=1;
         vel_msg.twist.linear.y=0;
         vel_msg.twist.linear.z=0;
         double delta_y,delta_x;
@@ -81,11 +81,11 @@ ros::NodeHandle n){
         vel_msg.twist.angular.y=0;
         vel_msg.twist.angular.z=0;
         
-        // ros::Rate loop(1000);
+        ros::Rate loop(10);
         double threshold=0.1;
         double distance=sqrt(delta_y*delta_y+delta_x*delta_x);
                 
-        while(distance>threshold){
+        while(1){
                 client.call(gms);
                 double x_curr,y_curr;
                 x_curr=gms.response.pose.position.x;
@@ -93,18 +93,18 @@ ros::NodeHandle n){
                 delta_x=x-x_curr;
                 delta_y=y-y_curr;
                 distance=sqrt(delta_y*delta_y+delta_x*delta_x);
-                vel_msg.twist.linear.x=4*distance;
-                vel_msg.twist.angular.z=4*(atan2(delta_y,delta_x)-(getangle(gms.response.pose.orientation.z,gms.response.pose.orientation.w)));
+                vel_msg.twist.linear.x=1;
+                vel_msg.twist.angular.z=0;
                 cout<<"Currently at ("<<x_curr<<","<<y_curr<<")"<<endl;
-                // vel_pub.publish(vel_msg);
-                client.call(sms);
-                // ros::spinOnce();
-                // loop.sleep();        
+                vel_pub.publish(vel_msg);
+                // client.call(sms);
+                ros::spinOnce();
+                loop.sleep();        
         }
         vel_msg.twist.angular.z=0;
         vel_msg.twist.linear.x=0;
-        client.call(sms);
-        // vel_pub.publish(vel_msg);
+        // client.call(sms);
+        vel_pub.publish(vel_msg);
         cout<<"END OF TRANSLATION.";
 }
 void move_goal(double x, double y, double x_in, double y_in, double theta,
@@ -131,11 +131,11 @@ int main(int argc, char **argv)
         /*************************************************************************************/
 	ros::NodeHandle n;
 	ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
-	sms.request.model_name="jassi_da_model";
-    sms.request.model_name="";
+	// sms.request.model_name="jassi_da_model";
+    // sms.request.model_name="";
     gms.request.model_name="jassi_da_model";
     gms.request.relative_entity_name="";
-    // vel_pub = n.advertise<gazebo_msgs::ModelState>("/gazebo/set_model_state",10);
+    vel_pub = n.advertise<gazebo_msgs::ModelState>("/gazebo/set_model_state",10);
 	
 	client.call(gms);
 	x_in=gms.response.pose.position.x, y_in = gms.response.pose.position.y,x,y,theta=gms.response.pose.orientation.z;

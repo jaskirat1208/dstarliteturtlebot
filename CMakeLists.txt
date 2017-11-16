@@ -136,6 +136,8 @@ include_directories(
 	 target_link_libraries(finder ${catkin_LIBRARIES})
 	 add_executable(obstacle_traj src/obstacle_traj.cpp )
 	 target_link_libraries(obstacle_traj ${catkin_LIBRARIES})
+	 add_executable(driver src/driver.cpp src/Dstar.h src/Dstar.cpp)
+	 target_link_libraries(driver ${catkin_LIBRARIES})
 
 	add_executable(main src/main.cpp )
 	 target_link_libraries(main ${catkin_LIBRARIES})

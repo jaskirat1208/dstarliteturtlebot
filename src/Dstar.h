@@ -100,7 +100,7 @@ class Dstar {
   double C1;
   double k_m;
   state s_start, s_goal, s_last;
-  int maxSteps;
+  long long int maxSteps;
 
   ds_pq openList;
   ds_ch cellHash;

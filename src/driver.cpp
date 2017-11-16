@@ -1,14 +1,130 @@
-#include <ros/ros.h>
-#include <gazebo_msgs/GetModelState.h>
 #include <iostream>
-#include <geometry_msgs/Twist.h>
-#include "unistd.h"
 #include <cstdlib>
 #include <fstream>
-#include <cmath>
-#include <ctime>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <ros/ros.h>
+#include <gazebo_msgs/GetModelState.h>
+#include <geometry_msgs/Twist.h>
+#include "Dstar.h"
 using namespace std;
+/*-----------------------------------------Global variables-----------------------------------------*/
 ros::Publisher vel_pub;
+/*---------------------------------------------------------------------------------------------------*/
+/*------------------------------------------FUNCTIONS------------------------------------------------*/
+std::vector<pair<int,int> > getpose();
+void create_output_file(pair<int,int> p1,pair<int,int> p2);
+pair<int,int> get_obstacle_position(ros::NodeHandle n);
+double getangle(double z,double w);
+void rotate(double x, double y, double x_in, double y_in, double theta,ros::NodeHandle n);
+void translate(double x, double y, double x_in, double y_in, double theta, ros::NodeHandle n);
+void move_goal(double x, double y,ros::NodeHandle n);
+/*---------------------------------------------------------------------------------------------------*/
+int main(int argc, char  **argv)
+{
+	ros::init(argc,argv,"driver");
+	ros::NodeHandle n;
+	ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
+	/*Declarations*/
+	Dstar *dstar = new Dstar(); 
+	int x,y;
+	pair<int,int> obstacle_position;
+	
+	gazebo_msgs::GetModelState g;
+	list<state> mypath;
+	/*initializations*/
+	vel_pub = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",10);
+	cin>>x>>y;
+	g.request.model_name="mobile_base";
+	client.call(g);
+	int x_cur = g.response.pose.position.x,y_cur = g.response.pose.position.y;
+	dstar->init(x_cur,y_cur,x,y);
+	dstar->replan();               // plan a path
+	mypath = dstar->getPath();
+	// cout<<mypath.size();
+	// system("rosrun dstarliteturtlebot planner > \"file.txt\"");
+	cout<<"PATH PLANNED"<<endl;
+	int max_iter=0;
+	list<state>::iterator iter = mypath.begin(),iter2;
+    for(iter2=mypath.begin(); iter2 != mypath.end(); iter2++) {
+        //glVertex3f(iter2->x, iter2->y, 0.3);
+        cout<<"("<<iter2->x<<","<<iter2->y<<")"<<endl;
+        // cout<<"Path comprises of ("<<iter2->x<<","<<iter2->y<<")"<<endl;
+    }
+
+/*CODE FOR PLANNER HERE*/
+	while( iter!=mypath.end() ){
+		cout<<"Going to: "<<iter->x<<" "<<iter->y<<endl;
+		obstacle_position = get_obstacle_position(n);
+		state s ;
+		s.x = obstacle_position.first;
+		s.y = obstacle_position.second;
+		list<state>::iterator iter_for_find = find(mypath.begin(), mypath.end(),s);
+		if ( iter_for_find!=mypath.end())	
+		{
+			max_iter++;
+			client.call(g);
+			cout<<"REPLANNING"<<iter_for_find->x<<","<<iter_for_find->y<<"NEW PATH:"<<endl;
+			dstar->updateStart(g.response.pose.position.x,g.response.pose.position.y);
+			dstar->updateCell(iter_for_find->x,iter_for_find->y,-1); 		//obstacle 
+			dstar->replan();
+			mypath = dstar->getPath();
+			iter = mypath.begin();
+			dstar->updateCell(iter_for_find->x,iter_for_find->y,0);		//reset the cost so that it does not become a hindrance in future.
+            for(iter2=mypath.begin(); iter2 != mypath.end(); iter2++) {
+                cout<<"("<<iter2->x<<","<<iter2->y<<")"<<endl;
+                // cout<<"Path comprises of ("<<iter2->x<<","<<iter2->y<<")"<<endl;
+            }
+		}
+		move_goal(iter->x,iter->y,n);
+		++iter;
+	}
+	return 0;
+}
+
+
+void create_output_file(pair<int,int> p1,pair<int,int> p2){
+	ofstream f("update.txt");
+	f<<p2.first<<" "<<p2.second<<endl<<p1.first<<" "<<p1.second;
+
+} 
+std::vector<pair<int,int> > getpose(){
+	fstream plan_file("file.txt");
+	string line;
+	std::vector< pair<int,int> > v;
+	stringstream ss;
+	while(getline(plan_file,line)){
+	// explode(line,'=');
+	for (int i = 0; i < line.size(); ++i)
+	{
+		if (line[i]=='=')
+		{
+			line[i]=' ';
+		}
+	}
+	ss<<line<<" ";
+	int x,y;
+	ss>>x>>y;
+	v.push_back(make_pair(x,y));
+	}
+	return v;
+}
+pair<int,int> get_obstacle_position(ros::NodeHandle n){
+	ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
+	gazebo_msgs::GetModelState gms;
+	string str = "jassi_da_model";
+	// cin>>str;
+	gms.request.model_name=str;
+	gms.request.relative_entity_name="";
+	client.call(gms);
+	int curr_x,curr_y;
+	curr_x=round(gms.response.pose.position.x);
+	curr_y= round(gms.response.pose.position.y);
+
+	cout<< "OBSTACLE " << str <<"is at "<<curr_x<<"," <<curr_y<<endl;
+	return make_pair(curr_x,curr_y);
+}
 double getangle(double z,double w){
         double halfangle=atan2(z,w);
         // cout<<halfangle<<endl;
@@ -51,9 +167,6 @@ ros::NodeHandle n){
         vel_pub.publish(vel_msg);
         cout<<"END OF ROTATION"<<endl;
 }
-
-
-
 void translate(double x, double y, double x_in, double y_in, double theta,
 ros::NodeHandle n){
         ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
@@ -104,12 +217,12 @@ void move_goal(double x, double y,ros::NodeHandle n){
         double x_in,y_in,theta;
         ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
         gazebo_msgs::GetModelState gms;
-        gms.request.model_name="mobile_base";
+        gms.request.model_name="jassi_da_model";
         gms.request.relative_entity_name="";        client.call(gms);
         x_in=gms.response.pose.position.x;
         y_in=gms.response.pose.position.y;
         theta=gms.response.pose.orientation.z;
-        cout<<x_in<<endl<<y_in<<endl<<theta;
+        // cout<<x_in<<endl<<y_in<<endl<<theta;
         double delta_x=x-x_in;
         double delta_y=y-y_in;
         // double theta;
@@ -121,36 +234,5 @@ void move_goal(double x, double y,ros::NodeHandle n){
         
         rotate(x,y,x_in,y_in,theta,n);                                                                        //rotates along the desired orientation
         translate(x,y,x_in,y_in,theta,n);                                                                        //move it in the required direction
-        cout<<"DESTINATION REACHED"<< x <<" " <<y;
-}
-int main(int argc, char **argv)
-{
-        // int n;
-        ros::init(argc,argv,"finder");
-        double x,y,x_in,y_in,theta;
-        /*************************************************************************************/
-                                                /*Initialisation of the ros node*/
-        /*************************************************************************************/
-        ros::NodeHandle n;
-        ros::ServiceClient client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
-        
-        vel_pub = n.advertise<geometry_msgs::Twist>("/mobile_base/commands/velocity",10);
-        // client.call(gms);
-        /***********************************************************************/
-                /*gms returns the current location of the turtlebot*/
-        /***********************************************************************/
-        // cout<<"Enter the coordinates where you want to go: "<<endl;
-        // cout<<"X= ";
-        cin>>x;
-        // cout<<"Y= ";
-        cin>>y;
-        
-        
-        /*************************************************************************************/
-                                                                        /*x,y: final positions*/
-                                                                /*x_in, y_in: initial positions*/
-                                                        /*theta: initial orientation of the turtlebot*/
-        /*************************************************************************************/
-        move_goal(x,y,n);
-        return 0;
+        cout<<"DESTINATION REACHED"<< x <<" " <<y<<endl;
 }

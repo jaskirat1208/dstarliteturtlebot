@@ -87,7 +87,6 @@ client=n.serviceClient<gazebo_msgs::GetModelState>("/gazebo/get_model_state");
 	// dstar->updateGoal(0,4);        // move goal to (0,1)
 	dstar->updateCell(0,1,-1);	//(1,1 
 	dstar->updateCell(0,2,-1);	//(1,1 
-
 	dstar->replan();               // plan a path
 	mypath = dstar->getPath();     // retrieve path
 	// cout<<mypath.size()<<endl;

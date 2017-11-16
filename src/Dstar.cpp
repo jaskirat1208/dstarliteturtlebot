@@ -613,7 +613,7 @@ updateCell(1,4,-1);     // set cell (3,4) to be non traversable
  */
 bool Dstar::replan() {
 
-  // path.clear();
+  path.clear();
 
   int res = computeShortestPath();
   //printf("res: %d ols: %d ohs: %d tk: [%f %f] sk: [%f %f] sgr: (%f,%f)\n",res,openList.size(),openHash.size(),openList.top().k.first,openList.top().k.second, s_start.k.first, s_start.k.second,getRHS(s_start),getG(s_start));
